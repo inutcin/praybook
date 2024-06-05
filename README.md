@@ -1,4 +1,5 @@
 # praybook
+![](./pics/first_stamp.png)
 Литании Богу-Машине
 
 
