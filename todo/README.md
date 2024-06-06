@@ -8,11 +8,21 @@ todo
 - [DDD](https://habr.com/ru/companies/dododev/articles/489352/)
 - [Асинхронность](https://habr.com/ru/companies/jugru/articles/446562/)
 - [System design](https://habr.com/ru/companies/jugru/articles/446562/)
-- Чистая архитектура
+- Чистая архитектура [this](https://habr.com/ru/articles/269589/)
 - План по описанию примеров использования Laravel
+    + singletone, regisster and providers in laravel
+    + (Жизненный цикл запроса в Laravel)[https://laravel.su/docs/10.x/lifecycle]
+    + middleware
+    + Pipeline архитектура
+    + mock при тестировании
+    + Чем отличается datamaper от active-record
+    + Чем active record нарушает solid
+    + Listener для моделек
 - Написать план по статическому анализу
 - План по описанию agile/scrum
 - Устройство разлияных индексов postgresql
+    + GIN and GIS indexes
+
 - Уровни изоляции транзакций
 - Использование explain, explaine analyze, отличия
 - Блокировки в БД
