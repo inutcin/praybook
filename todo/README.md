@@ -5,6 +5,7 @@ todo
 - Составить план описания паттернов по списку в [RefactoringGuru](https://github.com/RefactoringGuru/design-patterns-php) + несколько дрегих паттернов (Рассмотреть Dependence Injection, repository и пр)
 - Описать ACID по БД
 - SOLID
+- PSR 0,1,2,12
 - [DDD](https://habr.com/ru/companies/dododev/articles/489352/)
 - [Асинхронность](https://habr.com/ru/companies/jugru/articles/446562/)
 - [System design](https://habr.com/ru/companies/jugru/articles/446562/)
