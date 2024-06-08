@@ -1,0 +1,67 @@
+@startuml
+
+[*] -> Create
+
+Create --> AM : биллинг принял\n транзакицю  
+AM --> AM : транзакция не завершена\n переспрос 
+AM --> AF 
+AM --> AA
+
+AA --> AF
+AA --> M
+AA --> PR
+
+PR --> M
+
+M --> M
+M --> CA
+M --> SA
+M --> LA 
+M --> AC
+M --> AP
+
+AP --> F
+AP --> AF
+
+AC --> F
+AC --> AF
+
+LA --> Logistic 
+
+Logistic --> LC
+Logistic --> LD
+Logistic --> LG
+Logistic --> LZ
+Logistic --> LR
+Logistic --> LZ
+Logistic --> LU
+
+LC --> AW
+LD --> AW
+LG --> AW
+LZ --> AW
+LR --> AW
+L1 --> AW
+
+AW --> BW
+AW --> FW
+
+FW --> Done
+
+BW --> BW
+BW --> CW
+BW --> FW
+
+CW --> DW
+
+DW --> Done
+
+Done -> [*]
+Done -> D
+Done --> Done
+
+Create : отправка транзакции\n в биллинг
+AM : получение статуса\n транзакции
+Logistic : Внутренние процессы\nфуллфиллмента
+
+@enduml
