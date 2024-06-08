@@ -4,8 +4,7 @@
 
 [source code](./state.wsd)
 
-```
-```
+![](state.svg)
 
 # Источники
 

@@ -1,67 +1,79 @@
 @startuml
 
-[*] -> Create
+[*] --> A
 
-Create --> AM : биллинг принял\n транзакицю  
-AM --> AM : транзакция не завершена\n переспрос 
-AM --> AF 
-AM --> AA
+state "Приём и обработка заказа" as PreOrder #pink {
+    A -down-> B
+    B -up[#green]-> B : Retry 
+    B --> C: Платёж\nсоздан 
+    C -up-> C : Retry 
+    C -[#FF8888]-> D : Пришло\nподтверждение\nплатежа  
+    D -up[#8888FF]-> D : Retry 
+    C -> outReturnStore : Подтверждение\nплатежа\nне пришло
+    B -> outReturnStore : Платёж не\nбыл создан
 
-AA --> AF
-AA --> M
-AA --> PR
+    state outReturnStore <<exitPoint>>
+    state C #magenta
+}
 
-PR --> M
+D --> I : Не удалось\nскомплектовать\nзаказ
+outReturnStore --> M
 
-M --> M
-M --> CA
-M --> SA
-M --> LA 
-M --> AC
-M --> AP
 
-AP --> F
-AP --> AF
+state "Доставка" as Delivering {
+    D --> inOrderProcessing : Успешная комплектация заказа
 
-AC --> F
-AC --> AF
+    inOrderProcessing --> E 
+    E -up-> E :  Retry 
+    E --> F
+    F --> G
+    F --> H
+    H --> outOrderProcessingReturn
+    G --> outOrderProcessingDone
+    
+    state "Вход" as inOrderProcessing <<entryPoint>> 
+    state "Возврат\nтовара" as outOrderProcessingReturn <<exitPoint>>
+    state "Исполнение\nзаказа" as outOrderProcessingDone <<exitPoint>>
 
-LA --> Logistic 
+    state E #lightblue
+}
 
-Logistic --> LC
-Logistic --> LD
-Logistic --> LG
-Logistic --> LZ
-Logistic --> LR
-Logistic --> LZ
-Logistic --> LU
 
-LC --> AW
-LD --> AW
-LG --> AW
-LZ --> AW
-LR --> AW
-L1 --> AW
 
-AW --> BW
-AW --> FW
+state "Возврат платежа" as PAymentReversing {
+    outOrderProcessingReturn -down-> K
+    I --> K 
+    K -up-> K : Retry 
 
-FW --> Done
+    K --> J
+    J -up-> J : Retry 
 
-BW --> BW
-BW --> CW
-BW --> FW
+    J --> L
+}
 
-CW --> DW
+L --> M
+M --> N
+A --> N
+outOrderProcessingDone -down-> O
 
-DW --> Done
+O --> [*]
+N --> [*]
 
-Done -> [*]
-Done -> D
-Done --> Done
+A : Заказ создан
+B : Товаp\nзарезервирован
+C : Платёж создан
+D : Оплачено 
+E : Заказ\nскомплектован
+F : Заказ\nпередан\nкурьеру
+G : Доставка\nподтверждена
+H : Товар\nвозвращён\nв магазин
+I : Заказ не\nскомплектован 
+J : Возврат\nплатежа\nсоздан
+K : Готовится\nвозврат платежа
+L : Платёж\nвозвращен
+M : Резерв\nвозращен\nна склад
+N : Заказ\nотменён
+O : Заказ\nисполнен
 
-Create : отправка транзакции\n в биллинг
-AM : получение статуса\n транзакции
-Logistic : Внутренние процессы\nфуллфиллмента
-
+state I #red
 @enduml
